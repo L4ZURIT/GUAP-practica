@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content_control %}
+<h2>Список возможностей сайта</h2>
+{% endblock %}
+{% block content %}
+<ul>
+    <li>
+        <a href="{% url 'load' %}">Загрузка данных из csv</a>
+    </li>
+    <li>
+        <a href="{% url 'teachers_table' %}">Выгрузка данных в шаблон docx</a>
+        <p>(перейдите на картоку любого из преподавателей из списка и нажмите "Выгрузить")</p>
+    </li>
+</ul>
+{% endblock %}

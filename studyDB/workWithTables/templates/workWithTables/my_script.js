@@ -1,0 +1,3 @@
+function Load() {
+    // do nothing
+}

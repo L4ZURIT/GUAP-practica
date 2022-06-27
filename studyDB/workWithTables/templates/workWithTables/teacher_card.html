@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content_control %}<h2>Карточка преподавателя</h2>{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body text-bg-info">
+        <h4 class="card-title">{{ teacher.surname }} {{ teacher.name }} {{ teacher.second_name }}</h4>
+        <p class="card-text">Ученая степень: {{ teacher.get_academic_degree }}</p>
+        <p class="card-text">Ученое звание: {{ teacher.get_academic_rank }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Дата рождения: {{ teacher.birthday_date }}</li>
+      {% if request.user.is_authenticated %}
+      <li class="list-group-item">Место рождения: {{ teacher.birthday_place }}</li>
+      <li class="list-group-item">Место прописки: {{ teacher.registration_place }}</li>
+      <li class="list-group-item">Место проживания: {{ teacher.cur_place }}</li>
+      {% endif %}
+      <li class="list-group-item">Телефон: {{ teacher.phone_number }}</li>
+      {% if request.user.is_authenticated %}
+      <li class="list-group-item">Паспорт: {{ teacher.passport }}</li>
+      <li class="list-group-item">ИНН: {{ teacher.TIN }}</li>
+      <li class="list-group-item">СНИЛС: {{ teacher.INIPA }}</li>
+      <li class="list-group-item">Флюорография: {{ teacher.fluor_date }}</li>
+      {% endif %}
+    </ul>
+    {% if request.user.is_authenticated %}
+    <div class="card-body">
+        <p class="card-text">Контракт: {{ teacher.contract }}</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text">Образование: {{ education }}</p>
+    </div>
+    <div class="card-body">
+      <p>Для успешной вырузки данных файл "Документ.docx" должен быть размещен в корневой папке "*/projectDB/studyBD" проекта!</p>
+      <a href="{% url 'export' teacher.pk %}" class="btn btn-primary">Выгрузить в шаблон</a>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

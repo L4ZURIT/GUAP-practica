@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content_control %}
+<h2>{{ title }}</h2>
+<form class="gt-flex" role="search" method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="{{ form.search_choice.id_for_label }}" class="form-label">Искать по полю: </label>
+    {{ form.search_choice }}
+  </div>
+  <div class="mb-3">
+    <label for="{{ form.search_input.id_for_label }}" class="form-label">Ввод: </label>
+    {{ form.search_input }}
+  </div>
+
+  <button class="btn btn-outline-success" type="submit">Поиск</button>
+</form>
+{% endblock %}
+
+{% block content %}
+<table class="table table-bordered table-response table-sm">
+  <thead class="table-light">
+      <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Фамилия</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Отчество</th>
+          <th scope="col">Дата рождения</th>
+          {% if request.user.is_authenticated %}
+          <th scope="col">Место рождения</th>
+          <th scope="col">Адрес прописки</th>
+          <th scope="col">Адрес проживания</th>
+          {% endif %}
+          <th scope="col">Должность</th>
+          <th scope="col">Номер телефона</th>
+          {% if request.user.is_authenticated %}
+          <th scope="col">Паспорт</th>
+          <th scope="col">ИНН</th>
+          <th scope="col">СНИЛС</th>
+          <th scope="col">Ученая степень</th>
+          <th scope="col">Ученое звание</th>
+          <th scope="col">Номер договора</th>
+          <th scope="col">Дата флюорографии</th>
+          {% endif %}
+      </tr>            
+  </thead>
+  {% for item in page_obj.object_list %}
+  <tbody>
+      <tr>
+          <th scope="row">{{ item.id }}</th>
+          <td><a href="{% url 'teacher_card' item.pk %}">{{item.surname}}</a></td>
+          <td>{{item.name}}</td>
+          <td>{{item.second_name}}</td>
+          <td>{{item.birthday_date}}</td>
+          {% if request.user.is_authenticated %}
+          <td>{{item.birthday_place}}</td>
+          <td>{{item.registration_place}}</td>
+          <td>{{item.cur_place}}</td>
+          {% endif %}
+          <td>{{item.job}}</td>
+          <td>{{item.phone_number}}</td>
+          {% if request.user.is_authenticated %}
+          <td>{{item.passport}}</td>
+          <td>{{item.TIN}}</td>
+          <td>{{item.INIPA}}</td>
+          <td>{{item.get_academic_degree}}</td>
+          <td>{{item.get_academic_rank}}</td>
+          <td>{{item.contract}}</td>
+          <td>{{item.fluor_date}}</td>
+          {% endif %}
+        </tr>
+  </tbody>
+  {% endfor %}
+</table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+      <li class="page-item">
+          <a class="page-link disabled">Найдено записей: {{ page_obj.paginator.count }}</a>
+      </li>
+  </ul>
+</nav>
+{% endblock %}

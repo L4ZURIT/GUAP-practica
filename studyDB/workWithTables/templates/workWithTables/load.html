@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+{% block content_control %}
+<h2>Загрузка данных из таблицы csv в базу данных</h2>
+<p>Для успешной загрузки данных файл "Нагрузка_общая.xls" должен быть размещен в корневой папке "*/projectDB/studyBD" проекта!</p>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary btn-block">Загрузить</button>
+</form>
+{% endblock %}
+{% block content %}
+
+{% endblock %}
